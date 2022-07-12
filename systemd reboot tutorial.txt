@@ -1,0 +1,57 @@
+steps to reboot with systemd 
+advatanges
+-saves log 
+-can check status
+-can provide multiple arguments (when to start or how to start) 
+-in professional use in the industory 
+
+step - prepare rpi for script 
+- go to raspi config "sudo raspi-config" 
+- go to system option -> boot option. select autologin console
+
+
+step - create a systemd service script (copy paste as mentioned)
+- type in the terminal "sudo nano /etc/systemd/system/script.service" 
+- past the following into it after modification (things to change: execStart part
+	instead of capture.py replace with your own script name which you want to restart
+	and change working directory. replace with path of your working directory) 
+
+"""""""""""""""""""""""""
+
+[Unit]
+Description=Face recognition by Maaz
+After=network-online.target
+
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=10s
+WorkingDirectory=/home/pi
+ExecStart=/usr/bin/python3 /home/pi/capture.py
+
+
+[Install]
+WantedBy=multi-user.target
+
+""""""""""""""""""""""''""
+save it and then 
+-paste into console "sudo systemctl daemon-reload"
+-then type "sudo systemctl enable script.service" 
+
+all done. now reboot the system with "sudo reboot now" 
+
+
+COMMANDS: useful commands 
+
+"sudo systemctl status script" (tells you about the status of script. errors etc) 
+"sudo systemctl start script" to manually start it. 
+"sudo systemctl stop script" to manually stop it 
+"sudo systemctl daemon-reload" after making any changes to the service script.
+"sudo systemctl restart script" for restarting.  
+"sudo systemctl disable script.service" for disabling autoreboot
+to remove this script autoreboot 
+"sudo rm /etc/systemd/system/sript.service" and disable it. 
+
+
+for reference visit https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units

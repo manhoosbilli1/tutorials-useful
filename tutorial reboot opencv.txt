@@ -1,0 +1,19 @@
+steps 
+create a script to run on reboot 
+	1-do "cd /home/pi"
+	2-"sudo nano reboot.sh" 
+	3-edit and paste the following into your script
+ 
+	"#!/bin/bash 
+	 cd /path-to-your-directory 
+	 python3 recognize.py
+	" 
+
+	4-save the file and make it executable by 
+		-"sudo chmod +x reboot.sh" 
+	5-now we need to edit the crontab to make the reboot.sh run on reboot 
+	6-go to home directory "cd ~" 
+	7-open crontab "sudo crontab -e" 
+	8-at the bottom of the file add this file after modification
+		"@reboot /home/pi/reboot.sh"
+		save the file and reboot the rpi by "sudo reboot now" 

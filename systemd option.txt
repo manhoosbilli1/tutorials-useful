@@ -1,0 +1,27 @@
+sudo nano /etc/systemd/system/yourservice.service
+Put this inside
+
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Example service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=youruser
+Group=yourgroup
+WorkingDirectory=/home/pi/yourdirectory
+ExecStart=/path/to/your/script.py
+ExecStartPre=/bin/sleep 10
+Type=simple
+
+[Timer]
+OnStartupSec=25
+
+Then ran these commands
+
+sudo systemctl enable yourname
+sudo systemctl start yourname
+sudo systemctl status yourname
