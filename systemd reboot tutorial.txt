@@ -55,3 +55,34 @@ to remove this script autoreboot
 
 
 for reference visit https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units
+
+
+{UPDATES} 
+seems like the privileges that the systemd has is that of root, so the dependencies you install might not be accessible by root in that case just edit the service file and add the "User=pi" or whatever user has the privileges to run the script. 
+
+reboot script looks like this. 
+#!/bin/bash
+
+cd /home/pi/facial-recognition-main
+python3 facial_req.py
+
+
+service script looks like this. 
+
+[Unit]
+Description=Face recognition
+After=network-online.target
+
+
+[Service]
+User=pi
+Type=simple
+Restart=on-failure
+RestartSec=10s
+WorkingDirectory=/home/pi/facial-recognition-main
+ExecStart=/usr/bin/bash /home/pi/reboot.sh
+
+
+[Install]
+WantedBy=multi-user.target
+
