@@ -55,7 +55,7 @@ to remove this script autoreboot
 
 
 for reference visit https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units
-
+and https://www.funoracleapps.com/2022/02/run-shell-script-as-systemd-service-in.html
 
 {UPDATES} 
 seems like the privileges that the systemd has is that of root, so the dependencies you install might not be accessible by root in that case just edit the service file and add the "User=pi" or whatever user has the privileges to run the script. 
